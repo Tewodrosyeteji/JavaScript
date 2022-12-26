@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 
 
 // challenge_one
@@ -72,13 +72,23 @@ const bills=[ 22, 295, 176, 440, 37, 105, 10, 1100, 86 ,52];
 const tips=[];
 const totals=[];
 
-const calcTip=function( bills){
-
-    for(let i=0 ; i< bills.lenght;i++){
-     bills[i] <= 300 && bills[i] >= 50 ? tips.push(bills[i] * 0.15 ): tips.push(bills[i] * 0.2);
-      console.log(bills,tips);
-    }
-}
+// const calcTip=function( bills){
+//  return bill <= 300 && bill >= 50 ? bill * 0.15 : bill * 0.2;
+// }
 
 
+
+
+  const calcTip=function( bills){
+
+
+    for(let i=0 ; i< bills.length ;i++){
+           tips.push(bills[i] <= 300 && bills[i] >= 50 ? bills[i] * 0.15 : bills[i] * 0.2);
+           totals.push(tips[i] + bills[i]);
+      
+       }
+    
+  console.log(bills,tips,totals);
+   }
 calcTip(bills);
+
