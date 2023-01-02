@@ -109,7 +109,70 @@ const scorers={
 
 for(const player of game.scored){
     scorers[player] ? scorers[player]++ : scorers[player]=1;
-    console.log(scorers);
-
 }
-console.log(scorers);
+
+
+
+//challenge 3
+
+//1
+
+const gameEvents = new Map([
+  [17, '⚽ GOAL'],
+  [36, '� Substitution'],
+  [47, '⚽ GOAL'],
+  [61, '� Substitution'],
+  [64, '� Yellow card'],
+  [69, '� Red card'],
+  [70, '� Substitution'],
+  [72, '� Substitution'],
+  [76, '⚽ GOAL'],
+  [80, '⚽ GOAL'],
+  [92, '� Yellow card'],
+  ]);
+
+
+
+//1
+  const events=[...new Set(gameEvents.values())];
+  console.log(events);
+  
+  //2
+
+  gameEvents.delete(64)
+
+  //3
+
+  // console.log(`An event happened, on average, every ${90/gameEvents.size} minutes`); or
+
+  const time=[...gameEvents.keys()].pop();
+ console.log(`An event happened, on average, every ${time/gameEvents.size} minutes`); 
+
+
+//4
+for(const [min,event] of gameEvents){
+  const half=min<45?'FIRST':'SECOND'
+   console.log(`[${half} HALF]${min}: ${event}`);
+}
+
+//challenge  4
+
+document.body.append(document.createElement('textarea'));
+ document.body.append(document.createElement('button'));
+
+ document.querySelector('button').addEventListener('click',function(){
+  
+  const text=document.querySelector('textarea').value;
+
+  const rows=text.split('\n');
+
+  for(const [i,row] of rows.entries()){
+const [first,second]=row.toLowerCase().trim().split('_');
+
+const message=`${first}${second.replace(second[0],second[0].toUpperCase())}`
+
+
+console.log(`${message.padEnd(20)}${'✔'.repeat(i+1)}`);
+  }
+
+ });
