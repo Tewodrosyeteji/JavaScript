@@ -70,11 +70,15 @@ const dogsKate= [4, 1, 15, 8, 3];
 const checkDogs=function(arr1,arr2){
 
 const shallowCopy=[...arr1];
+//use slice method
 shallowCopy.shift();
 shallowCopy.pop()
 console.log(shallowCopy);
+//splice(0,1) and splice(-2)
+//slice(1,3)  
 
 const connectedArry=[...shallowCopy,...arr2];
+//use shallowCopy.concat(arr2)
 console.log(connectedArry);
 
 connectedArry.forEach(function(age,i){
@@ -87,3 +91,75 @@ if(age>=3){
 }
 
 checkDogs(dogsJulia,dogsKate);
+
+//challenge two
+
+//1
+const age1=[5, 2, 4, 1, 15, 8, 3];
+
+
+// const calcAverageHumanAge=function(ages){
+//   const humanAges=ages.map(age => age<=2 ? 2*age : 16 + age*4)
+//     const adult=humanAges.filter(excludAge => excludAge>=18 )
+    
+//     console.log(humanAges);
+//     console.log(adult);
+
+//     const average=adult.reduce((acc,curr)=> acc+curr,0)/adult.length;
+//     return average;
+// }
+// console.log(calcAverageHumanAge(age1));
+
+
+//challenge three
+
+
+
+const calcAverageHumanAge=ages =>ages.map(age => age<=2 ? 2*age : 16 + age*4).filter(excludAge => excludAge>=18 ).reduce((acc,curr,i,arr)=> acc+curr/arr.length,0);
+    
+console.log(calcAverageHumanAge(age1));
+
+
+
+// challenge four
+
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+  ];
+//1
+  dogs.forEach(function(value,i){
+    dogs[i].recommendedFood=value.weight ** 0.75 * 28;
+  })
+
+  //2
+
+  const sarahDog=dogs.find(dog => dog.owners.includes('Sarah'));
+    console.log(`sarahs dog eat too ${sarahDog.curFood >sarahDog.recommendedFood?'much':'little'}`)
+
+ //3
+
+ const ownersEatTooMuch=dogs.filter(dog=>dog.curFood>dog.recommendedFood).flatMap(owner=>owner.owners);
+
+
+ const ownersEatTooLittle=dogs.filter(dog=>dog.curFood<dog.recommendedFood).flatMap(owner=>owner.owners);
+
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little!`);
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
+
+//4
+
+const exactly=dogs.some(dog => dog.curFood === dog.recommendedFood);
+console.log(exactly);
+ //5
+ const dogEatingOk=dog =>dog.curFood > dog.recommendedFood *0.9 && dog.curFood > dog.recommendedFood *1.1;
+
+console.log(dogs.some(dogEatingOk));
+console.log(dogs.filter(dogEatingOk));
+
+//6
+
+const dogSort=dogs.slice().sort((a,b)=>a.recommendedFood-b.recommendedFood);
+console.log(dogSort);
