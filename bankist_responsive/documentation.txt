@@ -1,0 +1,119 @@
+1.selecting an elements
+
+document.documentElement
+document.head
+document.body
+
+document.querySelector("classNameOrIdNamewithSelectors")
+documetn.querySelecrorAll("classNameOrIdNamewithSelectors") -> gives a nodelists
+
+
+document.getElementById('IdNameWithOutSelector');
+document.getElementsByTagName('TageNameWithOutSelector'); -> gives an htmlcollections
+document.getElementsByClassName("ClassNameWithOutSelector"); -> gives an htmlcollections
+
+
+
+2. create and inserting elements
+
+
+.insertAdjacentHTML;
+
+
+const message=document.createElement('dev');
+message.classList.add('section');
+message.textContent='this is element creation';
+message.innerHTML='this is html element with text <button>submit</button>';
+header.prepend(message);
+header.append(message);
+header.append(message.cloneNode(true));
+header.Before(message);
+header.After(message);
+
+
+3. deleting element
+
+message.remove();
+
+message.parentElement.removeChild(message);
+
+
+styles
+
+1. inline styles
+
+message.style.backgroundColor='#123451';
+console.log(message.style.backgroundColor);  -> only get inline styles from html
+
+
+2.compute styles
+
+console.log(getComputedStyle(message).hight)
+message.style.hight= Number.parseFloat(getComputedStyle(message.hight))+ 20 + 'px';
+
+3. css variables or custome css
+
+
+document.documetnElement.style.setProperty('--color-primary','red');
+
+
+Attributes
+
+1. standard 
+
+const log=document.querySelector('.log');
+console.log(log.src);
+console.log(log.alt);
+console.log(log.className);
+
+log.alt='a beautiful log';
+
+2. non standard
+
+message.setAttribute('designer','teddy');
+message.getAttribute('designer');
+
+link.src -> absolute path
+link.getAttribute('src'); -> relative path
+
+3. data Attributes
+
+set a data attribute in log above like-> data-show-number-one='2'
+
+console.log(logo.dataset.numberOne) -> 2
+
+
+classes
+
+1.
+
+log.classList.add('e','f');
+log.classList.remove();
+log.classList.contains();//not like includes in arrays
+log.classList.toggle();
+
+log.className='teddt' -> don't use this because override the whole class name
+
+
+
+DOM traversing
+
+1. moving downward
+
+const h1=document.querySelecrorAll('.childSpan');
+h1.childNodes;
+h1.children;
+h1.firstElementChild;
+h1.lastElementChild;
+
+2. movig upward
+
+h1.parentNode;
+h1.parentElement;
+h1.closest('.link');
+
+3. going sideways
+
+h1.previousElementSibling
+h1.nextElementSibling
+h1.parentElement.children
