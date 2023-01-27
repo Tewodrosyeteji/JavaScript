@@ -1,0 +1,362 @@
+// constructor function
+
+const Preson=function(firstName,birthYear){
+this.firstName=firstName;
+this.birthYear=birthYear;
+
+
+
+this.calAge=function(){
+    console.log(2034 - this.birthYear);
+} -> bad practice
+}
+
+const teddy=new Person('teddy',1991);
+console.log(teddy); -> return the Person object
+
+1.works of new keyword
+    1.  new {} created 
+    2. when the function call  this={}
+    3.  {} connected to the prototype
+    4. fuction automatically return {}
+
+2. to check the instance of the object use instaceof keyword
+
+console.log(teddy instanceof Person) -> true
+
+3. creating a method in constructor function is a bad practice insted use prototype
+
+
+4 // prototypes inheritance
+
+all object created by the constructor fuction inherit constructors prototype
+
+Person.prototype.calAge =function (){
+    console.log(2034 - this.birthYear);
+}
+
+teddy.calAge();  -> give the person age
+
+* the prototype of object teddy is the prototype of constructor function check by __proto__
+console.log(teddy.__proto__ === Person.prototype) -> true
+
+*To check the prototype use isPrototypeOf keyword
+
+console.log(Person.prototype.isPrototypeOf(teddy)); -> true
+console.log(Person.prototype.isPrototypeOf(Person)) ->  false
+
+* To check direct property of the object use hasOwnProperty
+
+console.log(teddy.hasOwnProperty('firistName'));
+
+
+5.  classes
+
+classes are not hoisted
+classes are first citizen
+classes are run in strict mode
+
+
+//class declaration
+class PersonCl{
+
+Constructor(firstName,birthYear){
+    this.firstName=firstName;
+    this.birthYear=birthYear;
+
+}
+  // methods are added into .prototype propertys of PersonCl
+calAge(){
+
+    console.log(2045-this.birthYear);
+}
+
+}
+
+const teddy=new PersonCl('teddy',1991);
+
+6. getter and setter 
+
+1. object literal
+
+account={
+    owner:'yordi',
+    movement:[100,2000,-344,800],
+
+    get latest(){
+        return this.movement.splice(-1).pop();
+    }
+
+            //exactly takes one argument
+    set  latest(mov){
+      this.movement.push(mov);
+    }
+}
+
+//We don't call the methode use as property
+console.log(account.latest) -> 800
+
+account.latest=900;
+
+2. getter and setter in classes
+
+mainly used for validation
+
+
+class PersonCl{
+
+Constructor(fullName,birthYear){
+    this.fullName=fullName;
+    this.birthYear=birthYear;
+}
+
+  set fullName(name){
+    if(name.includes(' ')) this._fullName=name
+          else alert('${name} is not full name');
+  }
+
+    get fullName(){
+
+        return this._fullName;
+    }
+
+}
+
+const teddy=new PersonCl('teddy',1991);
+
+
+7. static method 
+
+They are not attached to the prototype but simply attached to the constructor
+
+examples are 
+   - Array.from();
+   -Number.parseFloat();
+   [].from() -> not work
+
+   1. constructor function
+
+   Person.hey=functon(){
+    console.log('hey there ');
+   }
+   Person.hey();
+   teddy.hey(); -> not work because not in prototype 
+   
+   2. class using static keyword
+
+
+
+class PersonCl{
+
+Constructor(fullName,birthYear){
+    this.fullName=fullName;
+    this.birthYear=birthYear;
+}
+
+  set fullName(name){
+    if(name.includes(' ')) this._fullName=name
+          else alert('${name} is not full name');
+  }
+
+    get fullName(){
+
+        return this._fullName;
+    }
+
+static hey(){
+    console.log('hey there ');
+}
+
+}
+
+const teddy=new PersonCl('teddy',1991);
+
+PersonCl.hey();
+
+
+8. Object.create(prototype)
+used in true class inheritance
+
+
+const PersonProto={
+
+    calAge(){
+        console.log(4043 -this.birthYear);
+    }
+
+    init(firstName,birthYear){
+        this.firstName=firstName;
+        this.birthYear=birthYear;
+    }
+}
+
+
+const teddy=Object.create(PersonProto);
+
+// teddy.name="teddy";
+// teddy.birthYear=1919;
+
+teddy.init('teddy',1991)
+
+teddy.calAge() -> 344
+
+
+9. inheritance between classes usig constructor function
+
+
+const Person=function(firstName,birthYear){
+this.firstName=firstName;
+this.birthYear=birthYear;
+}
+
+Person.prototype.calAge=function(){
+console.log(2023 - this.birthYear);
+}
+
+const Student = function(firstName,birthYear,course){
+Person.call(this,firstName,birthYear);
+this.course=course;
+}
+
+// create an inheritance b/n student and person prototype using Object.create
+// you should create the connection before defining any prototype method
+
+Student.prototype =Object.create(Person.Prototype);
+Student.prototype.constructor=Student; // you must change otherwise the prototype refers to Person
+
+
+Student.prototype.introduce=function(){
+
+    console.log(`my name is ${this.firstName} and I am  a ${this.course} student`);
+}
+
+const teddy= new Student('teddy',1991,'computer enginnering');
+teddy.introduce();
+teddy.calAge();
+
+10. inheritance between classes using extend and super
+
+class PersonCl{
+
+Constructor(fullName,birthYear){
+    this.fullName=fullName;
+    this.birthYear=birthYear;
+}
+
+  set fullName(name){
+    if(name.includes(' ')) this._fullName=name
+          else alert('${name} is not full name');
+  }
+
+    get fullName(){
+
+        return this._fullName;
+    }
+
+static hey(){
+    console.log('hey there ');
+}
+
+}
+
+class StudentCl extends PersonCl{
+
+    //if you haven't additional parameters the constructor method is unneccssary
+
+    constructor(fullName,birthYear,course){
+        super(fullName,birthYear);
+        this.course=course;
+    }
+    introduce(){
+    console.log(`my name is ${this.fullName} and I am  a ${this.course} student`);
+
+    }
+}
+
+const teddy=new StudentCl('teddy fekede',1919,'computer science');
+teddy.introduce();
+teddy.calAge();
+
+
+11 inheritance btween classes using Object.create()
+
+const PersonProto=function (){
+    calAge(){
+    console.log(2023 - this.birthYear)
+    }
+
+init(firsName,birthYear){
+  this.firstName=firstName;
+  this.birthYear=birthYear;
+    }
+}
+
+
+
+
+const StudentProto=Object.create(PersonProto.prototype);
+
+StudentProto.init=function(firstName,birthYear,course){
+
+PersonProto.init.call(this,firstName,birthYear){
+    this.course=course;
+}
+StudentProto.introduce=function(){
+    console.log(`my name is ${this.fullName} and I am  a ${this.course} student`);
+   
+}
+
+}
+
+const teddy=Object.create(StudentProto.prototype);
+
+teddy.init('teddy',1991,'computer enginnering');
+teddy.introduce();
+teddy.calAge();
+
+
+11. more deep into classes
+
+class Account{
+    constructor(owner,currency,pin){
+        this.owner=owner;
+        this.currency=currency;
+        this.pin=pin;
+        this.movements=[];
+        this.locale=navigator.language;
+    }
+
+    deposite(value){
+    this.movements.push(value);
+
+    }
+    withdraw(val){
+        this.deposite(-val)
+    }
+
+    validateLoan(val){
+        retun true;
+    }
+
+    requestLoan(val){
+     if(this.validateLoan) this.deposite(val);
+     console.log('Loan approved');
+    }
+
+}
+
+const acc1=new Account('teddy',200,1111);
+
+acc1.depostie(200);
+acc1.withdraw(300);
+acc1.requestLoan(400);
+acc1.validateLoan();
+
+
+console.log(acc1.pin);
+
+
+
+
+
+
