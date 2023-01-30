@@ -106,23 +106,23 @@ const countriesContainer = document.querySelector('.countries');
 
 /// consuming
 
-// const renderCountry=function(data,className=''){
-//     const html=`
-//         <article class="country ${className}">
-//         <img class="country__img" src="${data.flags.png}" />
-//             <div class="country__data">
-//             <h3 class="country__name">${data.name.common}</h3>
-//             <h4 class="country__region">${data.region}</h4>
-//             <p class="country__row"><span>👫</span>${(data.population/1000000).toFixed(1)}</p>
-//             <p class="country__row"><span>🗣️</span>${data.languages['amh']}</p>
+const renderCountry=function(data,className=''){
+    const html=`
+        <article class="country ${className}">
+        <img class="country__img" src="${data.flags.png}" />
+            <div class="country__data">
+            <h3 class="country__name">${data.name.common}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${(data.population/1000000).toFixed(1)}</p>
+            <p class="country__row"><span>🗣️</span>${data.languages['amh']}</p>
             
-//               </div>
-//             </div>
-//       </article>
-//       `
-//       countriesContainer.insertAdjacentHTML('beforeend',html);
-//     //   countriesContainer.style.opacity=1;
-// }
+              </div>
+            </div>
+      </article>
+      `
+      countriesContainer.insertAdjacentHTML('beforeend',html);
+      countriesContainer.style.opacity=1;
+}
 
 
 // const getCountrtData=function(country){
@@ -208,12 +208,144 @@ const countriesContainer = document.querySelector('.countries');
 ////////////////
 /// event loop in practive explain the order to print in the console
 
-console.log('test start');
-setTimeout(()=>console.log('0 second timer'),0); // 0 second is not a garanti
-Promise.resolve('promise resolve').then(res =>console.log(res));
-Promise.resolve('promise resolve 2').then(res =>{
-    for(let i=0;i<10000;i++){} // is the prove of microcallback queue
-    console.log(res)
-});
+// console.log('test start');
+// setTimeout(()=>console.log('0 second timer'),0); // 0 second is not a garanti
+// Promise.resolve('promise resolve').then(res =>console.log(res));
+// Promise.resolve('promise resolve 2').then(res =>{
+//     for(let i=0;i<10000;i++){} // is the prove of microcallback queue
+//     console.log(res)
+// });
 
-console.log('test ended');
+// console.log('test ended');
+
+
+////////////////////////
+//built a simple promese
+
+// const myFirstPromise=new Promise(function(resolve,rejecte){
+   
+// console.log('draw is happned')
+//     setTimeout(()=>{
+//         if(Math.random() >= 0.5){
+//             resolve('you win');
+//         }else{
+//             rejecte(new Error('you lost'));
+//         }
+//     },2000);
+// });
+
+// // consume the promise 
+
+// myFirstPromise.then(res => console.log(res)).catch(err => console.error(err));
+
+// ////////////
+// //promisfing is change callback based asynchronous function into promised based
+// //example promisfing setTimeout
+
+// const wait=function(seconds){
+//     return new Promise(function(resolve){
+//         setTimeout(resolve,seconds * 1000)
+//     });
+// };
+
+// wait(2).then(() => {
+//     console.log('wait for 2 second');
+//     return wait(1);
+// }).then(()=>{
+//     console.log('wait for 1 second')
+// })
+
+// ////////////
+// //create immdiately promise
+
+// Promise.resolve('abc').then(res => console.log(res));
+// Promise.reject(new Error('Problem')).catch(err => console.log(err));
+
+//// promisfing  geolocation
+// const getPosition=function(){
+//     return new Promise(function(resolve,reject){
+//         // navigator.geolocation.getCurrentPosition(
+//         //     position =>resolve(position),
+//         // err => reject(err)
+//         // );
+//         navigator.geolocation.getCurrentPosition(resolve,reject);
+        
+//     })
+// }
+
+// getPosition().then(pos => console.log(pos));
+
+
+
+///////////////
+//challenge two
+
+
+// const wait=function(seconds){
+//         return new Promise(function(resolve){
+//             setTimeout(resolve,seconds * 1000)
+//         });
+//     };
+
+// const imgContainer=document.querySelector('.images');
+
+// const createImage=function(imgPath){
+//     return new Promise(function(resolve,reject){
+//       const img= document.createElement('img');
+//       img.src=imgPath;
+
+//       img.addEventListener('load',function(){
+//         imgContainer.append(img);
+//         resolve(img);
+//       })
+
+//       img.addEventListener('error',function(){
+//         reject(new Error('imag is not found'));
+//       })
+     
+//     })
+// }
+
+// let currentimg;
+
+// createImage('img/img-1.jpg')
+//            .then((img)=>{
+//             currentimg=img;
+//             console.log('first imag loaded')
+//              return wait(2);
+//            }).then(()=>{
+//                 currentimg.style.display='none';
+//                 return createImage('img/img-2.jpg')
+//            }).then((img)=>{
+//                currentimg=img;
+//                console.log('second image is loaded');
+//                return wait(2);
+//            }).then(()=>{
+//             currentimg.style.display='none';
+//            }).catch(err => console.err(err));
+
+
+///////////////////////////////////
+/// consuming a promise using async await
+
+
+// const getCountry=async function(country){
+// const res=await fetch(`https://restcountries.com/v3.1/name/${country}`);
+// console.log(res);
+// const [data]= await res.json();
+// renderCountry(data);
+// };
+
+// getCountry('ethiopia');
+// console.log('first');
+
+///////////////////////////////////////////
+/// in async await error is handled by  try(){}catch (e){} and manually by  throw new Error()-> for 404,403 like errors
+
+
+////////////////////////////////////////////////////////////////
+///// even if error is happend in async function it return the resolved value to avoid this use throw errors in catch block
+
+
+/////////////////////////////////////////////////
+//// to avoid mixing async await function with old then catch use iff function to get access the await keyword outside of the async function ofcausre async is also used in iff function too.like (async function(){try{await...}catch (e){}})() this is also used to hadle error in async function 
