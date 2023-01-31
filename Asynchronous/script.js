@@ -208,12 +208,26 @@ const countriesContainer = document.querySelector('.countries');
 ////////////////
 /// event loop in practive explain the order to print in the console
 
-console.log('test start');
-setTimeout(()=>console.log('0 second timer'),0); // 0 second is not a garanti
-Promise.resolve('promise resolve').then(res =>console.log(res));
-Promise.resolve('promise resolve 2').then(res =>{
-    for(let i=0;i<10000;i++){} // is the prove of microcallback queue
-    console.log(res)
-});
+// console.log('test start');
+// setTimeout(()=>console.log('0 second timer'),0); // 0 second is not a garanti
+// Promise.resolve('promise resolve').then(res =>console.log(res));
+// Promise.resolve('promise resolve 2').then(res =>{
+//     // for(let i=0;i<10000;i++){} // is the prove of microcallback queue
+//     console.log(res)
+// });
 
-console.log('test ended');
+// console.log('test ended');
+
+
+//////////////////////////////////////////////////////////////
+// paralle promise -> when the operation is not dependent on one another use Promise.all([operaion1,operation2,operation3])
+// promise.all take an array and return an array so you should loop using map to get the real value
+// if one condition is rejected in promise.all() all the result is blocked
+
+
+
+///////////////////////////////////////////////////
+// Promise.race([condition1,condition2,condition3])
+// the same as Promise.all([]) but the race retern a single value that first settiled either resolved or rejected
+// mainly used for never ending promisesses example the request took a long time to fetch a data from server with the help of promisfied setTimeout callback notify the message
+//
